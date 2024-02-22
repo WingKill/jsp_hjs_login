@@ -7,7 +7,14 @@ public class MemberDto {
 	private String address;
 	
 	public MemberDto() {
-		// TODO Auto-generated constructor stub
+
+	}
+	
+	public MemberDto(String id, String pw, String email, String address) {
+		this.id=id;
+		this.pw=pw;
+		this.email=email;
+		this.address=address;
 	}
 
 	public String getId() {

@@ -1,8 +1,6 @@
 package edu.sejong.ex.dao;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -99,6 +97,36 @@ public class MemberDao {
 
 		return dto;
 	}
+	
+	public int insertMember(MemberDto member) {
+		int result = MemberDao.MEMBER_LOGIN_FAIL; // 0
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		String sql = "insert into members(id,pw,email,address) values (?,?,?,?)";
+		try {
+			con = dataSource.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, member.getId());
+			pstmt.setString(2, member.getPw());
+			pstmt.setString(3, member.getEmail());
+			pstmt.setString(4, member.getAddress());
+			result = pstmt.executeUpdate();					
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	
 //	public List<MemberDto> empList() {
 //		List<MemberDto> emps = new ArrayList<>();
